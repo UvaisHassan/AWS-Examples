@@ -1,0 +1,8 @@
+services:
+  aws-learning-env:
+    build:
+      context: .
+    image: aws_learning_image
+    container_name: aws_learning_container
+    tty: true
+    stdin_open: true
