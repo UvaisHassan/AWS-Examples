@@ -7,8 +7,8 @@ RUN useradd -ms /bin/bash devuser
 USER devuser
 WORKDIR /workspace
 
-# Clone the repo
-RUN git clone https://github.com/UvaisHassan/AWS-Examples.git
+# Copy the repo contents into the container and change ownership to devuser
+COPY --chown=devuser:devuser . /workspace
 
 # Default command to keep container running
 CMD [ "bash" ]
