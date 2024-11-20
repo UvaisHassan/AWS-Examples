@@ -1,0 +1,7 @@
+{
+    "name": "AWS Learning Environment",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "postCreateCommand": "echo 'DevContainer setup complete!'"
+}
