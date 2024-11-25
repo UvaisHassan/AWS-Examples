@@ -1,0 +1,15 @@
+#!/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "There has to be a bucket name!"
+    exit 1
+fi
+
+BUCKET_NAME=$1
+
+echo "=== Creating bucket $1 ==="
+
+aws s3api create-bucket \
+--bucket $BUCKET_NAME \
+--query Location \
+--output text

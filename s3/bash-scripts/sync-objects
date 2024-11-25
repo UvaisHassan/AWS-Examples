@@ -1,0 +1,43 @@
+#!/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "There has to be a bucket name!"
+    exit 1
+fi
+
+BUCKET_NAME=$1
+
+echo "=== Syncing generated random files objects to bucket $BUCKET_NAME ==="
+
+OUTPUT_DIR="/tmp/s3-bash-script-files"
+
+# Remove the folder if it already exists
+if [ -d "$OUTPUT_DIR" ]; then
+    rm -r $OUTPUT_DIR
+fi
+
+# Create the temp folder
+mkdir -p $OUTPUT_DIR
+
+# Generate a random number between 1 and 10
+NUM_FILES=$((RANDOM % 10 + 1))
+
+for ((i=1; i<=$NUM_FILES; i++)); do
+    # Generate a random filename
+    FILENAME="$OUTPUT_DIR/file_$i.txt"
+
+    echo "This is file $i" > $FILENAME
+done
+
+echo "Created random files:"
+
+tree $OUTPUT_DIR
+
+echo "Syncing..."
+
+aws s3 sync \
+$OUTPUT_DIR s3://$BUCKET_NAME \
+--delete \
+--quiet
+
+echo "Finished."

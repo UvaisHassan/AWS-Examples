@@ -1,0 +1,14 @@
+#!/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "There has to be a bucket name!"
+    exit 1
+fi
+
+BUCKET_NAME=$1
+
+echo "=== Listing objects in bucket $BUCKET_NAME ==="
+
+aws s3api list-objects \
+--bucket $BUCKET_NAME \
+--query Contents[].Key

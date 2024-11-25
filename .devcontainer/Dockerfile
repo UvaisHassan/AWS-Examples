@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     sudo \
+    tree \
+    jq \
     && apt-get clean
 
 # Download and install AWS CLI
