@@ -10,5 +10,9 @@
             ]
         }
     },
-    "postCreateCommand": "echo 'DevContainer setup complete!'"
+    "postCreateCommand": "echo 'DevContainer setup complete!'",
+    "runArgs": [
+        "--env-file",
+        ".env"
+    ]
 }
