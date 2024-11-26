@@ -1,18 +1,19 @@
 {
-    "name": "AWS Learning Environment",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-azuretools.vscode-docker"
-            ]
-        }
-    },
-    "postCreateCommand": "echo 'DevContainer setup complete!'",
-    "runArgs": [
-        "--env-file",
-        ".env"
-    ]
+  "name": "AWS Learning Environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "hashicorp.terraform"
+      ]
+    }
+  },
+  "postCreateCommand": "echo 'DevContainer setup complete!'",
+  "runArgs": [
+    "--env-file",
+    ".env"
+  ]
 }
