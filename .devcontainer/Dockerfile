@@ -32,7 +32,7 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh \
 # Install Pulumi and setup Python
 RUN curl -fsSL https://get.pulumi.com | sh \
   && mv /root/.pulumi/bin/pulumi* /usr/local/bin/ \
-  apt-get install -y python3 python3-venv
+  && apt-get install -y python3 python3-venv
 
 # Remove downloaded package files that are no longer needed
 RUN apt-get clean
