@@ -1,0 +1,12 @@
+{
+  "CORSRules": [
+    {
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["GET"],
+      "AllowedOrigins": [
+        "http://example-cors-uvais-1.s3-website.us-east-1.amazonaws.com"
+      ],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}
