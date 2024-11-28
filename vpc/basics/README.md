@@ -1,7 +1,7 @@
 ## Create a VPC
 
 ```sh
-VPC_ID=(aws ec2 create-vpc \
+VPC_ID=$(aws ec2 create-vpc \
 --cidr-block "10.0.0.0/16" \
 --tag-specifications "ResourceType=vpc,Tags=[{Key=Name,Value=example-vpc-uvais-1}]" \
 --query Vpc.VpcId \
@@ -20,7 +20,7 @@ aws ec2 modify-vpc-attribute \
 ## Create an IGW
 
 ```sh
-IGW_ID=(aws ec2 create-internet-gateway \
+IGW_ID=$(aws ec2 create-internet-gateway \
 --tag-specifications "ResourceType=internet-gateway,Tags=[{Key=Name,Value=example-igw-uvais-1}]" \
 --query InternetGateway.InternetGatewayId \
 --output text)
@@ -38,7 +38,7 @@ aws ec2 attach-internet-gateway \
 ## Create a subnet
 
 ```sh
-SUBNET_ID=(aws ec2 create-subnet \
+SUBNET_ID=$(aws ec2 create-subnet \
 --vpc-id "$VPC_ID" \
 --cidr-block "10.0.0.0/24" \
 --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=example-subnet-uvais-1}]" \
@@ -58,7 +58,7 @@ aws ec2 modify-subnet-attribute \
 ## Get the default route table for the VPC
 
 ```sh
-ROUTE_TABLE_ID=(aws ec2 describe-route-tables \
+ROUTE_TABLE_ID=$(aws ec2 describe-route-tables \
 --filters "Name=vpc-id,Values=$VPC_ID" "Name=association.main,Values=true" \
 --query RouteTables[].RouteTableId \
 --output text)
