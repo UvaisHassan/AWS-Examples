@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Create an IAM user with AWS Managed, Customer Managed, and Inline Policies"
+
+Resources:
+  # New S3 Bucket to be used in the inline policy
+  ExampleBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: "example-iam-bucket-uvais"
+
+  # New user
+  ExampleUser:
+    Type: "AWS::IAM::User"
+    Properties:
+      UserName: "ExampleUser"
+      Path: "/"
+      Policies: # Inline Policy
+        - PolicyName: "InlinePolicyExample"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "s3:ListBucket"
+                  - "s3:GetObject"
+                Resource:
+                  - !Sub "arn:aws:s3:::${ExampleBucket}"
+                  - !Sub "arn:aws:s3:::${ExampleBucket}/*"
+
+  # Attach custom policy to the user
+  AWSManagedPolicyAttachment:
+    Type: "AWS::IAM::ManagedPolicy"
+    Properties:
+      ManagedPolicyName: ManagedPolicyExample
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - "ec2:DescribeInstances"
+              - "ec2:StartInstances"
+              - "ec2:StopInstances"
+            Resource: "*"
+      Users: [!Ref ExampleUser]
