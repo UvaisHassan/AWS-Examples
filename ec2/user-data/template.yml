@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Template to launch two EC2 Ubuntu instances with Apache server setup
+
+Parameters:
+  ImageId:
+    Description: AMI of Ubuntu
+    Type: String
+    Default: ami-0866a3c8686eaeeba
+
+Resources:
+  InstanceSecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: Enable HTTP and SSH access
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: "22"
+          ToPort: "22"
+          CidrIp: "0.0.0.0/0"
+        - IpProtocol: "tcp"
+          FromPort: "80"
+          ToPort: "80"
+          CidrIp: "0.0.0.0/0"
+
+  Instance1WithBashScript:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: "t2.micro"
+      ImageId: !Ref ImageId
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          apt-get update -y
+          apt-get install apache2 -y
+          systemctl start apache2
+          systemctl enable apache2
+          echo "<html><body><h1>Hello from Instance 1 with Bash Script!</h1></body></html>" > /var/www/html/index.html
+
+  Instance2WithCloudConfig:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      InstanceType: "t2.micro"
+      ImageId: !Ref ImageId
+      SecurityGroups:
+        - !Ref InstanceSecurityGroup
+      UserData:
+        Fn::Base64: !Sub |
+          #cloud-config
+          packages:
+            - apache2
+          runcmd:
+            - systemctl start apache2
+            - systemctl enable apache2
+            - echo "<html><body><h1>Hello from Instance 2 with Cloud-Config!</h1></body></html>" > /var/www/html/index.html
+
+Outputs:
+  Instance1PublicIP:
+    Description: Public IP address of Instance 1
+    Value: !GetAtt Instance1WithBashScript.PublicIp
+
+  Instance2PublicIP:
+    Description: Public IP address of Instance 2
+    Value: !GetAtt Instance2WithCloudConfig.PublicIp
