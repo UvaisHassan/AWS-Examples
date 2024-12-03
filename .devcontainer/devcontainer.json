@@ -8,7 +8,8 @@
       "extensions": [
         "ms-azuretools.vscode-docker",
         "hashicorp.terraform",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "kddejong.vscode-cfn-lint"
       ]
     }
   },

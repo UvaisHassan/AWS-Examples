@@ -34,6 +34,10 @@ RUN curl -fsSL https://get.pulumi.com | sh \
   && mv /root/.pulumi/bin/pulumi* /usr/local/bin/ \
   && apt-get install -y python3 python3-venv
 
+# Setup PIP and install cfn-lint
+RUN apt-get install -y python3-pip \
+  && pip install cfn-lint
+
 # Remove downloaded package files that are no longer needed
 RUN apt-get clean
 
