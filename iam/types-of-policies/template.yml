@@ -28,7 +28,7 @@ Resources:
                   - !Sub "arn:aws:s3:::${ExampleBucket}/*"
 
   # Attach custom policy to the user
-  AWSManagedPolicyAttachment:
+  ManagedPolicyAttachment:
     Type: "AWS::IAM::ManagedPolicy"
     Properties:
       ManagedPolicyName: ManagedPolicyExample
